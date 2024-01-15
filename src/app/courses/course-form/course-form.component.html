@@ -1,1 +1,34 @@
-<p>course-form works!</p>
+<mat-card>
+  <button mat-icon-button aria-label="Voltar" (click)="back()">
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </button>
+
+  <mat-card-content>
+
+    <mat-toolbar color="primary">
+      Detalhes do Curso
+    </mat-toolbar>
+
+    <form [formGroup]="form">
+      <mat-form-field>
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Categoria</mat-label>
+        <mat-select formControlName="category">
+          <mat-option value="null"></mat-option>
+          <mat-option value="Frontend">Frontend</mat-option>
+          <mat-option value="Backend">Backend</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button (click)="onCancel()">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+  </mat-card-actions>
+</mat-card>
