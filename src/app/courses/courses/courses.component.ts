@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, of } from 'rxjs';
 
 import { AppMaterialModule } from '../../shared/app-material/app-material.module';
@@ -17,12 +18,14 @@ import { CoursesService } from './../services/courses.service';
 })
 export class CoursesComponent {
   courses$: Observable<Course[]>;
-  displayedColumns = ['name', 'category']
+  displayedColumns = ['name', 'category', 'actions']
   // coursesServise: CoursesService;
 
   constructor(
     private coursesServise: CoursesService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     // this.coursesServise = new CoursesService();
     this.courses$ = this.coursesServise.list().pipe(
@@ -33,9 +36,23 @@ export class CoursesComponent {
     )
   }
 
+  onAdd() {
+    this.router.navigate(['new'], { relativeTo: this.route })
+  }
+
   onError(errorMessage: string) {
     this.dialog.open(ErrorDialogComponent, {
       data: errorMessage,
     });
+  }
+
+  getIcon(value: string): string {
+    switch (value) {
+      case 'Frontend':
+        return 'code';
+      case 'Backend':
+        return 'computer'
+    }
+    return 'code';
   }
 }
